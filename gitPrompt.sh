@@ -1,6 +1,14 @@
 #!/bin/sh
 
-BASHFILE="$HOME/.bashrc"
+[ -z "$1" ] && {
+	[ -f "$HOME/.bash_profile" ] && {
+		BASHFILE="$HOME/.bash_profile"
+	} || {
+		BASHFILE="$HOME/.bashrc"
+	}
+} || {
+	BASHFILE="$1"
+}
 
 curl -Ls 'https://raw.githubusercontent.com/brennanwilkes/dev-setup/main/.git-prompt.sh' > ~/.git-prompt.sh
 
