@@ -1,6 +1,10 @@
 #!/bin/sh
 
-BASHFILE="$HOME/.bashrc"
+[ -z "$1" ] && {
+	BASHFILE="$HOME/.bashrc"
+} || {
+	BASHFILE="$1"
+}
 
 curl -Ls 'https://raw.githubusercontent.com/brennanwilkes/dev-setup/main/.git-prompt.sh' > ~/.git-prompt.sh
 
