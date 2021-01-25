@@ -12,6 +12,9 @@ curl -Ls 'https://raw.githubusercontent.com/brennanwilkes/dev-setup/main/gitProm
 #Misc functions and aliases
 curl -Ls 'https://raw.githubusercontent.com/brennanwilkes/dev-setup/main/miscUtilities.sh' | sh
 
+#Ubuntu setting configuration
+curl -Ls 'https://raw.githubusercontent.com/brennanwilkes/dev-setup/main/ubuntuConfig.sh' | sh
+
 #IMPORTANT
 source ~/.bashrc
 ```
