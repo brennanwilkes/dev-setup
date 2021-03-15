@@ -6,7 +6,7 @@ filterByRegex() {
 	done;
 }
 
-repoId="$1" #19472459
+repoId="$1"
 baseURL=https://gitlab.com/api/v4
 
 [ -z "$repoId" ] && {
