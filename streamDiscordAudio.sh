@@ -41,8 +41,7 @@ read id
 pactl move-source-output "$id" Virtual1.monitor
 
 #find audio program (source of stream audio)
-pactl list short clients
-
+pactl list short clients | grep -i 'totem'
 echo ""
 echo "Match ^ number of audio source (video player) with the third number \\/"
 echo ""
