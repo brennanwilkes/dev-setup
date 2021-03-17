@@ -8,6 +8,7 @@ filterByRegex() {
 
 repoId="$1"
 baseURL=https://gitlab.com/api/v4
+debugOutput=./curlRespLog.json
 
 [ -z "$repoId" ] && {
 	echo "Project ID not set"
@@ -29,27 +30,34 @@ curlResp=$( curl -sL -X POST --header "PRIVATE-TOKEN: $GITLAB_TOKEN" "$baseURL/p
 
 [ "$?" -ne 0 ] && {
 	echo "Fork failed"
-	echo "$curlResp"
+	echo "$curlResp" > "$debugOutput"
+	echo "Check \"$debugOutput\" for more information"
 	exit 2
 }
 
 newRepoId=$( echo "$curlResp" | sed -E 's/^..id.:([0-9]+),.*/\1/' )
-sshURL=$( echo "$curlResp" | filterByRegex 'ssh_url_to_repo.:.(git@gitlab\.com:\w+\/\w+\.git)' | head -n1 )
-httpURL=$( echo "$curlResp" | filterByRegex 'http_url_to_repo.:.(https:\/\/gitlab\.com\/\w+\/\w+\.git)' | head -n1 )
-repoName=$( echo "$curlResp" | filterByRegex '"name": "(\w+)"' | head -n1 )
+sshURL=$( echo "$curlResp" | filterByRegex 'ssh_url_to_repo. *: *.(git@gitlab\.com:[a-zA-Z0-9\-]+\/[a-zA-Z0-9\-]+\.git)' | head -n1 )
+httpURL=$( echo "$curlResp" | filterByRegex 'http_url_to_repo. *: *.(https:\/\/gitlab\.com\/[a-zA-Z0-9\-]+\/[a-zA-Z0-9\-]+\.git)' | head -n1 )
+repoName=$( echo "$curlResp" | filterByRegex '.name. *: *.([a-zA-Z0-9\-]+).' | head -n1 )
 
 curl -sL -X DELETE --header "PRIVATE-TOKEN: $GITLAB_TOKEN" "$baseURL/projects/$newRepoId/fork" >/dev/null
 [ "$?" -ne 0 ] && {
 	echo "Removal of fork relationship failed"
+	echo "$curlResp" > "$debugOutput"
+	echo "Check \"$debugOutput\" for more information"
 	exit 3
 }
 
 curl -sL -X PUT --header "PRIVATE-TOKEN: $GITLAB_TOKEN" "$baseURL/projects/$newRepoId?visibility=private" >/dev/null
 [ "$?" -ne 0 ] && {
 	echo "Setting visibility to private failed"
+	echo "$curlResp" > "$debugOutput"
+	echo "Check \"$debugOutput\" for more information"
 	exit 4
 }
 
-git clone "$sshURL" || git clone $httpURL || {
+git clone "$sshURL" || git clone "$httpURL" || {
 	echo Failed to clone to $( pwd )/$repoName
+	echo "$curlResp" > "$debugOutput"
+	echo "Check \"$debugOutput\" for more information"
 }
