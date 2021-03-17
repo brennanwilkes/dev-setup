@@ -26,5 +26,6 @@ echo 'alias restart-audio="pulseaudio -k && sudo alsa force-reload"' | addToFile
 echo 'alias editBashrc="gedit ~/.bashrc && source ~/.bashrc"' | addToFile
 echo 'kill-name () { proc="$1" ; ps -aux | grep "$proc" | tr -s " " | cut -d" " -f2 | xargs -n1 -I {} kill -9 {} ; }' | addToFile
 echo 'top-search() { top -c -p $(pgrep -d"," -f "$1") ; }' | addToFile
-echo 'filterByRegex() { while read line; do echo "$line" | grep -oE "$1" | sed -E "s/$1/\\1/g"; done ; }' | addToFile
 echo 'search-files () { key="$1" ; grep -rnli . -e "$key" ; }' | addToFile
+
+grep -qxF 'filterByRegex()' "${1:-${BASHFILE}}" || echo 'filterByRegex() { while read line; do echo "$line" | grep -oE "$1" | sed -E "s/$1/\\1/g"; done ; }' >> "${1:-${BASHFILE}}"
