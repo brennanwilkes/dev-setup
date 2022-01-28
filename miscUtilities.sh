@@ -31,5 +31,6 @@ echo 'dockerExecute () { query="$1"; shift; sudo docker exec $( sudo docker cont
 echo 'setupAwsCli() { curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" ; unzip awscliv2.zip ; rm awscliv2.zip ; ./aws/install -i /home/$HOME/aws-cli ; ~/aws-cli/v2/current/bin/aws configure ; }' | addToFile
 echo 'startEc2() { ~/aws-cli/v2/current/bin/aws ec2 start-instances --instance-ids i-0fb1b5499918be07f ; } ' | addToFile
 echo 'stopEc2() { ~/aws-cli/v2/current/bin/aws ec2 stop-instances --instance-ids i-0fb1b5499918be07f ; } ' | addToFile
+echo 'alias ec2="ssh ubuntu@ec2-52-26-174-237.us-west-2.compute.amazonaws.com"' | addToFile
 
 grep -qxF 'filterByRegex()' "${1:-${BASHFILE}}" || echo 'filterByRegex() { while read line; do echo "$line" | grep -oE "$1" | sed -E "s/$1/\\1/g"; done ; }' >> "${1:-${BASHFILE}}"
