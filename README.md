@@ -24,6 +24,7 @@ For uvic:
 
 ```sh
 
-curl -Ls 'https://raw.githubusercontent.com/brennanwilkes/dev-setup/main/uvic.sh' | sh ; source ~/.bashrc
+curl -Ls 'https://raw.githubusercontent.com/brennanwilkes/dev-setup/main/uvic.sh' | sh
+source ~/.bashrc
 
 ```
