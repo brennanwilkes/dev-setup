@@ -20,7 +20,7 @@ addToFile(){
 header='############### MISC UTILITIES ###############'
 grep -qxF "$header" "$BASHFILE" || echo "\n$header" >> "$BASHFILE"
 echo 'alias please="sudo"' | addToFile
-echo 'alias record="export WINDOWID=\$(xdotool getwindowfocus) ; ttyrec ; ttygif ttyrecord ; rm ttyrecord"' | addToFile
+#echo 'alias record="export WINDOWID=\$(xdotool getwindowfocus) ; ttyrec ; ttygif ttyrecord ; rm ttyrecord"' | addToFile
 echo 'alias compile="g++ *.cpp -Wall -g -fsanitize=address -std=c++14 -o main"' | addToFile
 echo 'alias restart-audio="pulseaudio -k && sudo alsa force-reload"' | addToFile
 echo 'alias editBashrc="gedit ~/.bashrc && source ~/.bashrc"' | addToFile
