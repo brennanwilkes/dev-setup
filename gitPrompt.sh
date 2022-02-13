@@ -12,6 +12,9 @@
 
 curl -Ls 'https://raw.githubusercontent.com/brennanwilkes/dev-setup/main/.git-prompt.sh' > ~/.git-prompt.sh
 
+# make the file executable
+chmod +x ~/.git-prompt.sh
+
 addToFile(){
 	file="${1:-${BASHFILE}}"
 	read line
